@@ -1,5 +1,5 @@
 """
-EchoMind 智能客服系统 — FastAPI 入口
+NovaRelay 智能客服系统 — FastAPI 入口
 
 启动时打印小熊饼干图案。
 所有核心组件在 lifespan 中初始化，通过环境变量配置。
@@ -36,7 +36,7 @@ logger = logging.getLogger(__name__)
 BANNER = r"""
     ʕ•ᴥ•ʔ  ʕ•ᴥ•ʔ  ʕ•ᴥ•ʔ
    ╔══════════════════════╗
-   ║   EchoMind  v2.0     ║
+   ║   NovaRelay  v2.0     ║
    ║   智能客服 AI 系统    ║
    ╚══════════════════════╝
     ʕ•ᴥ•ʔ  ʕ•ᴥ•ʔ  ʕ•ᴥ•ʔ
@@ -90,10 +90,10 @@ async def lifespan(app: FastAPI):
     )
 
     # Skills：启动时从目录加载业务能力说明，并在 Agent 调用 LLM 时动态注入。
-    skills_dir = os.getenv("ECHOMIND_SKILLS_DIR", str(pathlib.Path(_ROOT) / "skills"))
+    skills_dir = os.getenv("NOVARELAY_SKILLS_DIR", str(pathlib.Path(_ROOT) / "skills"))
     _skill_manager = SkillManager(
         root_dir=skills_dir,
-        max_prompt_chars=int(os.getenv("ECHOMIND_SKILLS_MAX_PROMPT_CHARS", "5000")),
+        max_prompt_chars=int(os.getenv("NOVARELAY_SKILLS_MAX_PROMPT_CHARS", "5000")),
     )
     _skill_manager.load()
 
@@ -179,18 +179,18 @@ async def lifespan(app: FastAPI):
         baseline_path=os.getenv("EVAL_BASELINE_PATH", "/app/data/eval/baseline.json"),
     )
 
-    logger.info("EchoMind 已就绪")
+    logger.info("NovaRelay 已就绪")
     yield
 
     await _monitor.stop()
     if _memory is not None:
         await _memory.close()
-    logger.info("EchoMind 已关闭")
+    logger.info("NovaRelay 已关闭")
 
 
 # ── FastAPI ───────────────────────────────────────────────────────────────────
 app = FastAPI(
-    title="EchoMind 智能客服",
+    title="NovaRelay 智能客服",
     version="2.0.0",
     lifespan=lifespan,
     docs_url="/docs",
@@ -481,6 +481,12 @@ class EvalRunInput(BaseModel):
     dialog_cases: Optional[List[EvalDialogInput]] = None
 
 
+class HarnessRunInput(BaseModel):
+    """可重复执行的质量门禁评测。"""
+    suite: str = Field(default="smoke", pattern=r"^[a-z0-9_-]+$")
+    concurrency: int = Field(default=2, ge=1, le=8)
+
+
 @app.post("/knowledge/add", tags=["知识库"])
 async def add_knowledge(body: BatchDocInput):
     """
@@ -613,10 +619,68 @@ async def run_eval(body: Optional[EvalRunInput] = None):
     }
 
 
+@app.post("/eval/harness", tags=["Evaluation"])
+async def run_harness(body: Optional[HarnessRunInput] = None):
+    """运行版本化场景集，并返回断言、聚合指标与质量门禁结果。"""
+    if _orchestrator is None:
+        raise HTTPException(503, "服务未就绪")
+
+    import json as _json
+    from agents.agent_orchestrator import Request
+    from evaluation.harness import EvaluationHarness, HarnessResponse, load_suite, save_report
+
+    options = body or HarnessRunInput()
+    suite_path = pathlib.Path(_ROOT) / "evaluation" / "suites" / f"{options.suite}.json"
+    if not suite_path.exists():
+        raise HTTPException(404, f"评测套件不存在: {options.suite}")
+    baseline_path = pathlib.Path(_ROOT) / "evaluation" / "baselines" / f"{options.suite}.json"
+    baseline = _json.loads(baseline_path.read_text(encoding="utf-8")) if baseline_path.exists() else None
+
+    async def execute(case):
+        result = await _orchestrator.run(Request(
+            message=case.input,
+            user_id="harness",
+            conv_id=f"eval-{case.id}-{uuid.uuid4().hex[:6]}",
+        ))
+        return HarnessResponse(
+            text=result.response,
+            intent=result.intent.value if result.intent else "",
+            agent=result.agent_type.value,
+            latency_ms=result.latency_ms,
+            metadata={"request_id": result.request_id, "tools_used": result.tools_used},
+        )
+
+    suite_name, cases, gates = load_suite(suite_path)
+    report = await EvaluationHarness(execute, options.concurrency).run(suite_name, cases, gates, baseline)
+    report_dir = pathlib.Path(os.getenv("EVAL_REPORT_DIR", str(pathlib.Path(_ROOT) / "evaluation" / "reports")))
+    json_path, markdown_path = save_report(report, report_dir)
+    return {
+        "suite": report.suite,
+        "run_id": report.run_id,
+        "passed": report.passed,
+        "metrics": report.metrics,
+        "gates": report.gates,
+        "regressions": report.regressions,
+        "artifacts": {"json": str(json_path), "markdown": str(markdown_path)},
+        "cases": [
+            {
+                "id": item.id,
+                "passed": item.passed,
+                "assertions": item.assertions,
+                "intent": item.response.intent,
+                "agent": item.response.agent,
+                "latency_ms": item.response.latency_ms,
+                "error": item.error,
+            }
+            for item in report.cases
+        ],
+    }
+
+
 # ── 交互式 CLI ────────────────────────────────────────────────────────────────
 async def _cli():
     print(BANNER)
-    print("EchoMind CLI — 输入 quit 退出\n")
+    print("NovaRelay CLI — 输入 quit 退出\n")
 
     from agents.agent_orchestrator import AgentOrchestrator, Request
     from memory.conversation_memory import MemoryManager, MsgRole
@@ -624,8 +688,8 @@ async def _cli():
 
     cfg = _anthropic_cfg()
     skill_manager = SkillManager(
-        root_dir=os.getenv("ECHOMIND_SKILLS_DIR", str(pathlib.Path(_ROOT) / "skills")),
-        max_prompt_chars=int(os.getenv("ECHOMIND_SKILLS_MAX_PROMPT_CHARS", "5000")),
+        root_dir=os.getenv("NOVARELAY_SKILLS_DIR", str(pathlib.Path(_ROOT) / "skills")),
+        max_prompt_chars=int(os.getenv("NOVARELAY_SKILLS_MAX_PROMPT_CHARS", "5000")),
     )
     skill_manager.load()
     orch = AgentOrchestrator(
@@ -667,7 +731,7 @@ async def _cli():
         await mem.add_message(user_id, conv_id, MsgRole.USER, msg)
         await mem.add_message(user_id, conv_id, MsgRole.ASSISTANT, result.response)
 
-        print(f"\nEchoMind [{result.agent_type.value}]: {result.response}\n")
+        print(f"\nNovaRelay [{result.agent_type.value}]: {result.response}\n")
 
     await mem.close()
 

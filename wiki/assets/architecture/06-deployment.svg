@@ -30,19 +30,19 @@
   <text class="label" x="270" y="275">服务容器</text>
   <rect class="box blue" x="110" y="310" width="190" height="62"/>
   <text class="label" x="156" y="337">主应用</text>
-  <text class="small" x="142" y="356">echomind-app</text>
+  <text class="small" x="142" y="356">novarelay-app</text>
   <rect class="box green" x="360" y="310" width="190" height="62"/>
   <text class="label" x="418" y="337">Redis</text>
-  <text class="small" x="390" y="356">echomind-redis</text>
+  <text class="small" x="390" y="356">novarelay-redis</text>
   <rect class="box green" x="110" y="410" width="190" height="62"/>
   <text class="label" x="164" y="437">ChromaDB</text>
-  <text class="small" x="136" y="456">echomind-chromadb</text>
+  <text class="small" x="136" y="456">novarelay-chromadb</text>
   <rect class="box orange" x="360" y="410" width="190" height="62"/>
   <text class="label" x="410" y="437">Prometheus</text>
-  <text class="small" x="383" y="456">echomind-prometheus</text>
+  <text class="small" x="383" y="456">novarelay-prometheus</text>
   <rect class="box purple" x="235" y="500" width="190" height="62"/>
   <text class="label" x="292" y="527">Nginx</text>
-  <text class="small" x="270" y="546">echomind-nginx</text>
+  <text class="small" x="270" y="546">novarelay-nginx</text>
 
   <rect class="panel" x="670" y="240" width="460" height="310"/>
   <text class="label" x="845" y="275">挂载与数据</text>

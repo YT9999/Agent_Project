@@ -317,7 +317,6 @@ class EndToEndEvaluator:
             results=results,
         )
         self._history.append(report)
-        self._save_baseline(report)
         return report
 
     async def _evaluate_dialog_case(self, case: Dict[str, Any], case_idx: int) -> List[EvalResult]:
@@ -429,6 +428,13 @@ class EndToEndEvaluator:
     @property
     def history(self) -> List[EvalReport]:
         return self._history
+
+    def promote_baseline(self, report: Optional[EvalReport] = None) -> None:
+        """显式批准一次评测结果，避免普通运行自动覆盖回归参照。"""
+        candidate = report or (self._history[-1] if self._history else None)
+        if candidate is None:
+            raise ValueError("没有可提升的评测结果")
+        self._save_baseline(candidate)
 
     def _load_baseline(self) -> Optional[EvalReport]:
         if not self._baseline_path or not self._baseline_path.exists():

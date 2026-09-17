@@ -1,17 +1,17 @@
-# NexusOps 企业智能运营协同中枢
+# NovaRelay 企业智能运营协同中枢
 
-> NexusOps 是 EchoMind 在企业运营协同方向上的产品化表达：它不是一个单轮智能客服机器人，而是一个支持 RAG、记忆增强、结构化多 Agent 路由、动态 Skills 和评测闭环的企业运营 Agent 平台。
+> NovaRelay 是 NovaRelay 在企业运营协同方向上的产品化表达：它不是一个单轮智能客服机器人，而是一个支持 RAG、记忆增强、结构化多 Agent 路由、动态 Skills 和评测闭环的企业运营 Agent 平台。
 
 ## 1. 定位概述
 
 ### 一句话定位
 
-NexusOps 是一个面向企业复杂运营场景的智能协同中枢，能够统一接入业务请求，自动识别意图、提取关键实体、检索企业知识、分派专业 Agent 协同处理，并通过监控与评测机制持续优化服务质量。
+NovaRelay 是一个面向企业复杂运营场景的智能协同中枢，能够统一接入业务请求，自动识别意图、提取关键实体、检索企业知识、分派专业 Agent 协同处理，并通过监控与评测机制持续优化服务质量。
 
 ### 更技术化的表达
 
 ```text
-NexusOps = Intent Recognition + RAG + Memory + Multi-Agent Routing + Skills + Monitor + Evaluation
+NovaRelay = Intent Recognition + RAG + Memory + Multi-Agent Routing + Skills + Monitor + Evaluation
 ```
 
 它适合被描述为：
@@ -29,7 +29,7 @@ NexusOps = Intent Recognition + RAG + Memory + Multi-Agent Routing + Skills + Mo
 用户问一句 -> 机器人答一句
 ```
 
-但 NexusOps 的设计重点不是“让一个模型聊天”，而是把企业运营请求拆成一条可治理的工程链路：
+但 NovaRelay 的设计重点不是“让一个模型聊天”，而是把企业运营请求拆成一条可治理的工程链路：
 
 ```text
 业务请求
@@ -85,11 +85,11 @@ NexusOps = Intent Recognition + RAG + Memory + Multi-Agent Routing + Skills + Mo
 - 缺少统一的自动化评测和回归检测机制
 - 管理者很难量化不同 Agent、工具和规则的实际效果
 
-NexusOps 的目标是把这条链路变成智能化、可观测、可评测、可迭代的企业运营协同流程。
+NovaRelay 的目标是把这条链路变成智能化、可观测、可评测、可迭代的企业运营协同流程。
 
 ## 4. 目标场景
 
-NexusOps 可以统一处理企业运营中的多类请求：
+NovaRelay 可以统一处理企业运营中的多类请求：
 
 | 场景 | 用户示例 | 系统处理方式 |
 |---|---|---|
@@ -248,7 +248,7 @@ general = 低
 
 ## 10. 与普通方案的差异
 
-| 对比项 | 普通客服 Bot | NexusOps |
+| 对比项 | 普通客服 Bot | NovaRelay |
 |---|---|---|
 | 问题理解 | 关键词或单轮 prompt | 细粒度意图、意图组、实体、紧急程度 |
 | 知识使用 | 直接塞知识库结果 | 按意图触发 RAG，支持查询改写、召回和重排 |
@@ -301,23 +301,23 @@ general = 低
 ### 项目标题
 
 ```text
-NexusOps 企业智能运营协同中枢
+NovaRelay 企业智能运营协同中枢
 ```
 
 也可以根据投递岗位调整为：
 
 ```text
-NexusOps 多 Agent 客服编排运行时
+NovaRelay 多 Agent 客服编排运行时
 ```
 
 ```text
-NexusOps: Multi-Agent Customer Support Harness
+NovaRelay: Multi-Agent Customer Support Harness
 ```
 
 ### 项目一句话
 
 ```text
-设计并实现 NexusOps 企业智能运营协同中枢，支持细粒度意图识别、RAG 知识库、Redis + ChromaDB 分层记忆、结构化多 Agent 路由、动态 Skills 注入、工具熔断降级和 LLM-as-Judge 评测闭环。
+设计并实现 NovaRelay 企业智能运营协同中枢，支持细粒度意图识别、RAG 知识库、Redis + ChromaDB 分层记忆、结构化多 Agent 路由、动态 Skills 注入、工具熔断降级和 LLM-as-Judge 评测闭环。
 ```
 
 ### 简历 bullet 示例
@@ -362,7 +362,7 @@ NexusOps: Multi-Agent Customer Support Harness
 更稳妥的说法是：
 
 ```text
-NexusOps 面向企业运营高频问题提供智能分流、知识增强回复和多 Agent 协同处理能力，并为复杂、高风险或低置信度请求预留人工升级通道。
+NovaRelay 面向企业运营高频问题提供智能分流、知识增强回复和多 Agent 协同处理能力，并为复杂、高风险或低置信度请求预留人工升级通道。
 ```
 
 ## 14. 最终推荐标题与副标题
@@ -370,7 +370,7 @@ NexusOps 面向企业运营高频问题提供智能分流、知识增强回复�
 标题：
 
 ```text
-NexusOps 企业智能运营协同中枢
+NovaRelay 企业智能运营协同中枢
 ```
 
 副标题：
@@ -382,5 +382,5 @@ NexusOps 企业智能运营协同中枢
 一句话版本：
 
 ```text
-NexusOps 是一个面向企业复杂运营请求的多 Agent 协同平台，能够结合企业知识库、历史记忆、动态规则和运行监控，实现可解释、可观测、可评测的智能运营处理链路。
+NovaRelay 是一个面向企业复杂运营请求的多 Agent 协同平台，能够结合企业知识库、历史记忆、动态规则和运行监控，实现可解释、可观测、可评测的智能运营处理链路。
 ```

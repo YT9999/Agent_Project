@@ -1,10 +1,10 @@
-# EchoMind 学习文档
+# NovaRelay 学习文档
 
 这是一份把项目定位、业务流程、关键代码、使用方式和技术亮点合并后的学习文档。内容基于当前代码实现重写，尽量按“先看懂系统，再看懂代码，最后能跑起来”的顺序组织。
 
 ## 1. 项目定位
 
-EchoMind 是一个面向复杂客服任务的多 Agent 客服编排运行时。
+NovaRelay 是一个面向复杂客服任务的多 Agent 客服编排运行时。
 
 它解决的不是“能聊天”，而是这类真实问题：
 
@@ -64,7 +64,7 @@ EchoMind 是一个面向复杂客服任务的多 Agent 客服编排运行时。
 用户消息 -> 单一 LLM -> 回复
 ```
 
-EchoMind 是：
+NovaRelay 是：
 
 ```text
 用户消息 -> 记忆 -> 意图 -> 知识库 -> 路由 -> 工具 -> 回复 -> 回写 -> 评测 -> 监控
@@ -76,7 +76,7 @@ EchoMind 是：
 
 ### 3.1 `/chat` 主链路
 
-入口在 [api/main.py](/Users/xiao_xiong/Desktop/code/EchoMind/api/main.py)。
+入口在 [api/main.py](/Users/xiao_xiong/Desktop/code/NovaRelay/api/main.py)。
 
 当前链路是：
 
@@ -168,7 +168,7 @@ EchoMind 是：
 
 文件：`core/intent_recognizer.py`
 
-EchoMind 的意图识别不是单模型分类，而是三路融合：
+NovaRelay 的意图识别不是单模型分类，而是三路融合：
 
 - LLM 语义理解
 - Embedding 相似度
@@ -539,16 +539,16 @@ LLM-as-Judge 评分维度：
 
 建议按这个顺序看：
 
-1. [api/main.py](/Users/xiao_xiong/Desktop/code/EchoMind/api/main.py)
-2. [core/intent_recognizer.py](/Users/xiao_xiong/Desktop/code/EchoMind/core/intent_recognizer.py)
-3. [agents/agent_orchestrator.py](/Users/xiao_xiong/Desktop/code/EchoMind/agents/agent_orchestrator.py)
-4. [agents/tools.py](/Users/xiao_xiong/Desktop/code/EchoMind/agents/tools.py)
-5. [memory/conversation_memory.py](/Users/xiao_xiong/Desktop/code/EchoMind/memory/conversation_memory.py)
-6. [mcp/tool_manager.py](/Users/xiao_xiong/Desktop/code/EchoMind/mcp/tool_manager.py)
-7. [mcp/knowledge_base.py](/Users/xiao_xiong/Desktop/code/EchoMind/mcp/knowledge_base.py)
-8. [core/skill_loader.py](/Users/xiao_xiong/Desktop/code/EchoMind/core/skill_loader.py)
-9. [monitor/performance_monitor.py](/Users/xiao_xiong/Desktop/code/EchoMind/monitor/performance_monitor.py)
-10. [evaluation/evaluator.py](/Users/xiao_xiong/Desktop/code/EchoMind/evaluation/evaluator.py)
+1. [api/main.py](/Users/xiao_xiong/Desktop/code/NovaRelay/api/main.py)
+2. [core/intent_recognizer.py](/Users/xiao_xiong/Desktop/code/NovaRelay/core/intent_recognizer.py)
+3. [agents/agent_orchestrator.py](/Users/xiao_xiong/Desktop/code/NovaRelay/agents/agent_orchestrator.py)
+4. [agents/tools.py](/Users/xiao_xiong/Desktop/code/NovaRelay/agents/tools.py)
+5. [memory/conversation_memory.py](/Users/xiao_xiong/Desktop/code/NovaRelay/memory/conversation_memory.py)
+6. [mcp/tool_manager.py](/Users/xiao_xiong/Desktop/code/NovaRelay/mcp/tool_manager.py)
+7. [mcp/knowledge_base.py](/Users/xiao_xiong/Desktop/code/NovaRelay/mcp/knowledge_base.py)
+8. [core/skill_loader.py](/Users/xiao_xiong/Desktop/code/NovaRelay/core/skill_loader.py)
+9. [monitor/performance_monitor.py](/Users/xiao_xiong/Desktop/code/NovaRelay/monitor/performance_monitor.py)
+10. [evaluation/evaluator.py](/Users/xiao_xiong/Desktop/code/NovaRelay/evaluation/evaluator.py)
 
 ### 5.1 为什么这个顺序最省力
 
@@ -778,7 +778,7 @@ wiki/           项目文档
 
 ## 9. 一句话总结
 
-EchoMind 的核心不是“会聊天”，而是把客服系统里最关键的几件事工程化了：
+NovaRelay 的核心不是“会聊天”，而是把客服系统里最关键的几件事工程化了：
 
 - 识别问题
 - 分配角色

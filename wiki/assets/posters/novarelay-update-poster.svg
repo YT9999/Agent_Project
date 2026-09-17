@@ -49,7 +49,7 @@
 
   <!-- Header -->
   <rect class="header shadow" x="36" y="34" width="1008" height="222" rx="24"/>
-  <text class="title" x="72" y="106">EchoMind 又升级了</text>
+  <text class="title" x="72" y="106">NovaRelay 又升级了</text>
   <text class="subtitle" x="74" y="154">Python + Java 双版本 · 一键部署 · 动态 Skills</text>
   <text class="body" x="74" y="200">企业级智能客服 Agent 项目继续补齐工程化能力</text>
   <g transform="translate(768,74)">

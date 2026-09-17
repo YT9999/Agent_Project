@@ -149,7 +149,7 @@
   <!-- Main solution -->
   <rect class="main-panel soft-shadow" x="24" y="560" width="1490" height="492"/>
   <rect x="24" y="560" width="1490" height="66" fill="#f0faf4" rx="16"/>
-  <text class="section-title" x="382" y="604">本项目方案：EchoMind 企业级智能客服架构（可配置、可评测、可部署）</text>
+  <text class="section-title" x="382" y="604">本项目方案：NovaRelay 企业级智能客服架构（可配置、可评测、可部署）</text>
 
   <g transform="translate(42,650)">
     <rect class="card card-green" width="172" height="300"/>
